@@ -81,6 +81,7 @@
         <template
           slot-scope="scope">
           <el-switch
+            @change="changeStatus()"
             v-model="scope.row.mg_state"></el-switch>
         </template>
       </el-table-column>
@@ -91,20 +92,22 @@
         <template
           slot-scope="scope">
           <el-button
+            @click="showDiaEditUser(scope.row)"
             type="primary"
             icon="el-icon-edit"
             circle
             size="mini"
             plain></el-button>
           <el-button
-            type="success"
-            icon="el-icon-check"
+            @click="showDiaDelUser(scope.row.id)"
+            type="danger"
+            icon="el-icon-delete"
             circle
             size="mini"
             plain></el-button>
           <el-button
-            type="danger"
-            icon="el-icon-delete"
+            type="success"
+            icon="el-icon-check"
             circle
             size="mini"
             plain></el-button>
@@ -125,7 +128,7 @@
 
     <!--添加用户对话框-->
     <el-dialog
-      title="收货地址"
+      title="添加用户"
       :visible.sync="dialogFormVisibleAdd">
       <el-form
         :model="userdata">
@@ -141,7 +144,7 @@
           label="密码"
           :label-width="formLabelWidth">
           <el-input
-            v-model="userdata.name"
+            v-model="userdata.password"
             autocomplete="off"></el-input>
         </el-form-item>
 
@@ -167,14 +170,57 @@
         class="dialog-footer">
         <el-button
           @click="dialogFormVisibleAdd = false">
-          取
-          消
+          取消
         </el-button>
         <el-button
           type="primary"
-          @click="dialogFormVisibleAdd = false">
-          确
-          定
+          @click=" DiaAddUser()">
+          确定
+        </el-button>
+      </div>
+    </el-dialog>
+    <!--编辑用户对话框-->
+    <el-dialog
+      title="编辑用户"
+      :visible.sync="dialogFormVisibleEdit">
+      <el-form
+        :model="userdata">
+        <el-form-item
+          label="用户名"
+          :label-width="formLabelWidth">
+          <el-input
+            v-model="userdata.username"
+            autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item
+          label="邮箱"
+          :label-width="formLabelWidth">
+          <el-input
+            v-model="userdata.email"
+            autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item
+          label="电话"
+          :label-width="formLabelWidth">
+          <el-input
+            v-model="userdata.mobile"
+            autocomplete="off"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div
+        slot="footer"
+        class="dialog-footer">
+        <el-button
+          @click="dialogFormVisibleEdit = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          @click=" DiaEditUser()">
+          确定
         </el-button>
       </div>
     </el-dialog>
@@ -189,12 +235,20 @@
       return {
         query: '',
         formdata: [],
-        userdata: {},
+        userdata: {
+          username:"",
+          password:"",
+          id:"",
+          email:"",
+          mobile:""
+        },
         total: -1,
         pagesize: 2,
         pagenum: 1,
         dialogFormVisibleAdd: false,
-        formLabelWidth: '120px'
+        dialogFormVisibleEdit:false,
+        formLabelWidth: '120px',
+
       }
     },
     methods: {
@@ -233,13 +287,81 @@
       getAllUsers(){
         this.handleGetData ();
       },
-      //  添加用户  对话框展示
+      //  展示添加用户  对话框展示
       showDiaAddUser () {
         this.dialogFormVisibleAdd = true
+      },
+      //添加用户
+      async DiaAddUser(){
+        const res = await this.$http.post("users",this.userdata)
+        const {data:{meta:{msg,status}}} = res;
+        if(status === 201){
+          this.$message.success(msg);
+        }
+        this.dialogFormVisibleAdd = false
+      },
+      //展示编辑用户对话框
+      showDiaEditUser(user){
+        this.dialogFormVisibleEdit = true;
+        this.userdata.username = user.username
+        this.userdata.email=user.email
+        this.userdata.mobile=user.mobile
+        this.userdata.id = user.id
+      },
+      // 编辑用户
+      // id	用户 id	不能为空 参数是url参数:id
+      // email	邮箱	可以为空
+      // mobile	手机号	可以为空
+      async DiaEditUser(){
+        this.$http.defaults.headers.common['Authorization'] = localStorage.getItem('token')
+        const res = await this.$http.put(`users/${this.userdata.id}`,{
+          mobile:this.userdata.mobile,
+          email:this.userdata.email
+        })
+        // console.log(res)
+        const {data:{meta:{msg,status}}} = res;
+        if(status === 200){
+          this.$message.warning(msg);
+          this.dialogFormVisibleEdit = false
+        }
+      },
+    //  改变用户状态
+      changeStatus(){
+        // this.formdata.mg_state = !this.formdata.mg_state;
+
+      },
+      // 展示删除用户弹框
+       showDiaDelUser(id){
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          const res = await this.$http.delete(`users/${id}`)
+          const {data:{meta:{status,msg}}} = msg;
+          if(status === 200){
+            this.$message({
+              type: 'success',
+              message: msg
+            });
+          }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       }
     },
     created () {
       this.handleGetData()
+    },
+    mounted () {
+      if(!localStorage.getItem("token")){
+        this.$router.push({
+          name:"login"
+        })
+      }
     }
   }
 </script>

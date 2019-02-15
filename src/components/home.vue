@@ -25,6 +25,7 @@
           class="el-menu-vertical-demo">
           <el-submenu index="1">
             <template slot="title">
+              <i class="el-icon-location"></i>
               <span>用户管理</span>
             </template>
               <el-menu-item index="users">
