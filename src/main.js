@@ -8,11 +8,11 @@ import router from './router'
 
 //引入axios
 import axios from 'axios'
-axios.defaults.baseURL = "http://localhost:8888/api/private/v1/"
-Vue.prototype.$http = axios
 
 //引入公共样式
 import '@/assets/css/base.css'
+axios.defaults.baseURL = "http://localhost:8888/api/private/v1/"
+Vue.prototype.$http = axios
 
 // ElementUI其实Vue插件,和VueRouter用法一样  Vue.use(名)
 // Vue插件的使用
