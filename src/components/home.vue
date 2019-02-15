@@ -104,7 +104,7 @@ export default{
     background: #b3c0d1;
   }
   .main{
-    background:orange;
+    background:gray;
 
   }
 </style>
