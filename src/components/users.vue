@@ -309,15 +309,15 @@
           this.roles = data
           this.currentUserId = user.id
           this.curentName = user.username
-          this.userRoleId = res1.data.data.rid
+          this.userRoleId = res1.data.data.rid// 设置发送请求时的请求头-> axios库 ->找axios中有没有可以设置headers头部的API->看axios文档
+          const AUTH_TOKEN = localStorage.getItem('token')
+          this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
         }
         this.dialogFormVisibleRole = true
       },
       //获取用户数据
       handleGetData () {
-        // 设置发送请求时的请求头-> axios库 ->找axios中有没有可以设置headers头部的API->看axios文档
-        const AUTH_TOKEN = localStorage.getItem('token')
-        this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+
         this.$http.get(`users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${this.pagesize}`)
           .then((res) => {
             const {data: {data, meta: {status, msg}}} = res
