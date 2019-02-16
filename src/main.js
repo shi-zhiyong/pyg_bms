@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import moment from  'moment'
+import cusBread from './components/cusBread'
 
 //引入封装过后的  axios插件
 import HttpServer from './components/htttp'
@@ -25,6 +26,9 @@ Vue.config.productionTip = false
 Vue.filter("fmtdate",(v)=>{
   return moment(v).format('YYYY-MM-DD')
 })
+
+//注册全局组件
+Vue.component(cusBread.name,cusBread)
 
 /* eslint-disable no-new */
 new Vue({
