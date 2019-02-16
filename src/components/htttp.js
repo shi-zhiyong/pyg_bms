@@ -17,10 +17,7 @@ HttpServer.install = function (Vue) {
     // 对请求错误做些什么
     return Promise.reject(error);
   });
-
   Vue.prototype.$http = axios
-
 }
-
 export default HttpServer;
 
