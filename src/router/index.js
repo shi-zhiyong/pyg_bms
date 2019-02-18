@@ -52,7 +52,6 @@ router.beforeEach((to, from, next) => {
     const token = localStorage.getItem("token");
     if(!token){
       Message.warning("请先登录");
-      // alert("")
       router.push({
         name: 'login'
       })

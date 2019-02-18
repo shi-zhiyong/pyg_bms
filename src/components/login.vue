@@ -24,34 +24,12 @@ export default {
     }
   },
   methods: {
-    // handlelogin() {  //如果发送请求没有反应  应该就是数据库启动dos窗口卡死了  CTRL+c 试一试
-    //   this.$http
-    //     .post(`login`, this.formdata)
-    //     .then(res => {
-    //       const {
-    //         data:{data:{token},meta},
-    //         status
-    //       } = res
-    //       if(meta.status === 200){
-    //         localStorage.setItem ("token",token)
-    //         console.log(token)
-    //         this.$router.push({
-    //           name:"home"
-    //         })
-    //         // console.log(data)
-    //       }else{
-    //         this.$message.error(meta.msg);
-    //       }
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //     });
-    // }
+
     async  handlelogin () { // 如果发送请求没有反应  应该就是数据库启动dos窗口卡死了  CTRL+c 试一试
       const res = await this.$http.post(`login`, this.formdata)
-      const {data: {data: {token}, meta: {status, msg}}} = res
+      const {data: {data, meta: {status, msg}}} = res
       if (status === 200) {
-        localStorage.setItem('token', token)
+        localStorage.setItem('token', data.token)
         this.$router.push({
           name: 'home'
         })

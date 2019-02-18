@@ -67,11 +67,13 @@ export default{
     },
     async getMenus() {
       const res = await this.$http.get(`menus`);
-      const AUTH_TOKEN = localStorage.getItem('token')
-      this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+      // const AUTH_TOKEN = localStorage.getItem('token')
+      // this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
       const {data,meta:{status}} = res.data
       if(status === 200){
         this.menuData = data
+        console.log(data)
+        console.log(this.menuData)
       }
     }
   },
@@ -85,7 +87,6 @@ export default{
         name:"login"
       })
     }
-
   },
 
 }

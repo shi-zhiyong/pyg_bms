@@ -52,8 +52,9 @@
     methods:{
       async getRightsUser(){
         // 设置发送请求时的请求头-> axios库 ->找axios中有没有可以设置headers头部的API->看axios文档
-        const AUTH_TOKEN = localStorage.getItem('token')
-        this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+        // const AUTH_TOKEN = localStorage.getItem('token')
+        // this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+
         const res = await this.$http.get(`rights/list`)
         console.log(res)
         const {data,meta:{status}} = res.data

@@ -2,7 +2,6 @@
 // 把axios相关代码封装成Vue的插件
 // 结果 在main.js可以Vue.use(axios)
 import axios from 'axios'
-
 // Vue插件
 const HttpServer = {};
 
@@ -19,7 +18,7 @@ HttpServer.install = function (Vue) {
   // 请求拦截器的代码
   axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    console.log(config.url);
+    // console.log(config.url);
 
     // 1. headers请求头
     // 2. url 请求标识路径
@@ -27,7 +26,8 @@ HttpServer.install = function (Vue) {
     // 如果请求是login, 直接发送请求
     if (config.url !== 'login') {
       const AUTH_TOKEN = localStorage.getItem("token");
-      axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+      // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;   //这样做是不可以的
+      config.headers["Authorization"] = AUTH_TOKEN;
     }
     // 当请求不是login, 先加头部,然后继续发送请求
 
@@ -38,9 +38,6 @@ HttpServer.install = function (Vue) {
   });
 
 
-
-
   Vue.prototype.$http = axios
-
 }
 export default HttpServer;
