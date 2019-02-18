@@ -9,7 +9,7 @@ import moment from  'moment'
 import cusBread from './components/cusBread'
 
 //引入封装过后的  axios插件
-import HttpServer from './components/htttp'
+import HttpServer from './components/http'
 Vue.use(HttpServer);
 
 //引入公共样式

@@ -1,7 +1,6 @@
 // 让axios变成Vue插件
 // 把axios相关代码封装成Vue的插件
 // 结果 在main.js可以Vue.use(axios)
-
 import axios from 'axios'
 
 // Vue插件
@@ -20,7 +19,7 @@ HttpServer.install = function (Vue) {
   // 请求拦截器的代码
   axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    console.log("拦截器被触发----");
+    console.log(config.url);
 
     // 1. headers请求头
     // 2. url 请求标识路径
