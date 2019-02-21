@@ -72,8 +72,6 @@ export default{
       const {data,meta:{status}} = res.data
       if(status === 200){
         this.menuData = data
-        console.log(data)
-        console.log(this.menuData)
       }
     }
   },
