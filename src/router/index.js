@@ -7,6 +7,9 @@ import Rights from '@/components/rights'
 import Roles from '@/components/roles'
 import Goods from '@/components/goods'
 import Goodsadd from '@/components/goodsadd'
+import Params from '@/components/params'
+import Categories from '@/components/categories'
+
 
 import {Message} from 'element-ui'
 
@@ -43,6 +46,16 @@ const router = new Router({
           name:"goodsadd",
           path:"/goodsadd",
           component:Goodsadd
+        },
+        {
+          name:"params",
+          path:"/params",
+          component:Params
+        },
+        {
+          name:"categories",
+          path:"/categories",
+          component:Categories
         }
       ]
     },
