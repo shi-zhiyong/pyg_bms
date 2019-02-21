@@ -9,6 +9,8 @@ import Goods from '@/components/goods'
 import Goodsadd from '@/components/goodsadd'
 import Params from '@/components/params'
 import Categories from '@/components/categories'
+import Orders from '@/components/orders'
+import Reports from '@/components/reports'
 
 
 import {Message} from 'element-ui'
@@ -56,7 +58,17 @@ const router = new Router({
           name:"categories",
           path:"/categories",
           component:Categories
+        },
+        {
+          name:"orders",
+          path:"/orders",
+          component:Orders
+        },{
+          name:"reports",
+          path:"/reports",
+          component:Reports
         }
+
       ]
     },
     {
