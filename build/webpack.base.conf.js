@@ -24,6 +24,17 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  // [配置cdn]
+  externals: {
+    // key->包名字->去package中找
+    // value->该包的源码中暴露给全局的变量名
+    "vue": "Vue",
+    "vue-router": "VueRouter",
+    "element-ui": "ELEMENT",
+    "moment": "moment",
+    "axios": "axios",
+    "echarts": "echarts"
+  },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
