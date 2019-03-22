@@ -41,4 +41,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ```js
 var a=100;
 ```
-
+1
+1
+1
+1
